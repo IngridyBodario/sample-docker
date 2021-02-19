@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Controllers\Operations;
 
+use App\Http\Controllers\Controller;
 use App\Repository\UsersRepository;
-use App\Http\Services\DataValidator;
+use App\Services\DataValidator;
 
-class Register
+class Register extends Controller
 {
     public $requiredParams = [
         "name",

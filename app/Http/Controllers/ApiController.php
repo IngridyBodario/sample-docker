@@ -15,7 +15,7 @@ class ApiController extends Controller
     public function api(Request $request, $id)
     {
         try {
-            $path_class = "App\Http\Services\\{$id}";
+            $path_class = "App\Http\Controllers\Operations\\{$id}";
             if (!class_exists($path_class)){
                 throw new \Exception("Nao existe a classe $id"); 
             }

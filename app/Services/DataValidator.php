@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Http\Services;
+namespace App\Services;
 
 class DataValidator
 {
@@ -22,25 +22,16 @@ class DataValidator
     public function validateDocument($document, $request) {
         try {
             $document = preg_replace("/[^0-9]/", "", $document);
-            if(strlen($document) == 11) {
-                $return = \Validator::make(
-                    ['document' => $document],
-                    ['document' => 'required|cpf']
-                );
-                if($return->fails() == true) {
-                    throw new \Exception('CPF invalido');
-                }
-                $type_user = 1;
-            } else {
-                $return = \Validator::make(
-                    ['document' => $document],
-                    ['document' => 'required|cnpj']
-                );
-                if($return->fails() == true) {
-                    throw new \Exception('CNPJ invalido');
-                }
-                $type_user = 2;
+            $type_document = (strlen($document) == 11) ? 'cpf' : 'cnpj';
+            $return = \Validator::make(
+                ['document' => $document],
+                ['document' => 'required|'.$type_document]
+            );
+            if($return->fails() == true) {
+                throw new \Exception($type_document.' invalido');
             }
+            $type_user = (strlen($document) == 11) ? 1 : 2;
+            
             return [
                 'error' => false,
                 'type_user' => $type_user,

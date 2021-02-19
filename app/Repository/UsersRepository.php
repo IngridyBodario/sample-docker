@@ -42,11 +42,11 @@ class UsersRepository
         return $result;
     }
 
-    public function updateBalance($balance, $id_user)
+    public function updateBalance($balance, $id)
     {
         return DB::connection('pgsql')
             ->table('users')
-            ->whereIn('users.balance', $balance)
-            ->update(['id' => $id_user]);
+            ->where('users.id', '=', $id)
+            ->update(['users.balance' => $balance]);
     }
 }
